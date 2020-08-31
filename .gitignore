@@ -1,0 +1,4 @@
+# Ignore (big) data in Priordata. Provide this data yourself. 
+PriorData/*.txt
+PriorData/*.fa
+PriorData/*.vcf
