@@ -11,8 +11,8 @@ Please refer to the authors of the software for any questions: http://epigenomic
 **Test** whether it's working with the following commands:
 
 ```
-sudo docker build -t rddpred-github:1.1.3
-sudo docker run rddpred-github:1.1.3 python RDDpred.py
+docker build -t rddpred-github:1.1.3
+docker run rddpred-github:1.1.3 python RDDpred.py
 ``` 
 
 Original RDDpred.py file = `RDDpred.py.org`
