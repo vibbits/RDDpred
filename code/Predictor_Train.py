@@ -102,8 +102,10 @@ def PredictorTrain_func(argElm):
 		
 	modelObj_path = modelDir + ss + "Predictor.model"
 	trainLog_path = "%s.Step4.Predictor.Training.Log"%outPrefix
-	wekaJar_path = "weka"
-        #wekaJar_path = argElm.Tools_Dir_path + ss + "weka.jar"
+	# wekaJar_path = /opt/conda/envs/tmp-env/share/weka-3.8.1-0
+        # java -Xmx10G -cp /opt/conda/envs/tmp-env/share/weka-3.8.1-0/weka.jar  weka.classifiers.trees.RandomForest
+        # TOOO: check for class path
+	wekaJar_path = "/opt/conda/envs/tmp-env/share/weka-3.8.1-0" + ss + "weka.jar"
 	memLimit = argElm.Memory_UseLimit_str.upper()
 	if memLimit[-1] != "G":
 		memLimit += "G"
