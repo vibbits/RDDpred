@@ -50,8 +50,8 @@ def PredictionResultSummarize_func(argElm):
 	summaryLog_file.write("Overall acceptance rate:\t%.2f%%"%accRate + nn)
 	summaryLog_file.close()
 
-	removeCmd = "rm -rf %s"%predDir
-	commands.getoutput(removeCmd)
+	#removeCmd = "rm -rf %s"%predDir
+	#commands.getoutput(removeCmd)
 	##End PredictionResultSummarize_func
 
 def PredictionPerfom_func(argElm):
@@ -128,12 +128,19 @@ def LineBufferFlush_sub(argElm, lineBuffer_pair, predOut_file):
 	bufferFile.writelines(lineBuffer_pair[1])
 	bufferFile.close()
 
+        wekaJar_path = "/opt/conda/envs/tmp-env/share/weka-3.8.1-0" + ss + "weka.jar"
+        bufferFileA_path = predDir + ss + "TargetLine.Buffer.arff"
+        
+        a, b, c, d = argElm.Memory_UseLimit_str, wekaJar_path, bufferFile_path, bufferFileA_path
+        convertCmd ='java -Xmx%s -cp %s weka.core.converters.CSVLoader %s -L "16:Positive,Negative" > %s'%(a, b, c, d)
+        commands.getoutput(convertCmd)
+
 	modelObj_path = modelDir + ss + "Predictor.model"
-        wekaJar_path = "weka"
-        #wekaJar_path = argElm.Tools_Dir_path + ss + "weka.jar"
+        #wekaJar_path = "weka"
+        wekaJar_path = "/opt/conda/envs/tmp-env/share/weka-3.8.1-0" + ss + "weka.jar"
 	predOut_path = "%s.Prediction.ResultList.txt"%outPrefix
 
-	a, b, c, d = argElm.Memory_UseLimit_str, wekaJar_path, bufferFile_path, modelObj_path
+	a, b, c, d = argElm.Memory_UseLimit_str, wekaJar_path, bufferFileA_path, modelObj_path
 	predCmd = "java -Xmx%s -cp %s weka.classifiers.trees.RandomForest -T %s -l %s -p 0"%(a, b, c, d)
 	predLine_list = commands.getoutput(predCmd).split(nn)
 	for predLine in predLine_list:

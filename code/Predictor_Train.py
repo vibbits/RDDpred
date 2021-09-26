@@ -98,7 +98,8 @@ def round_figures(x):
 def PredictorTrain_func(argElm):
 	outPrefix = argElm.Out_Prefix_str
 	modelDir = "%s.ModelDir"%outPrefix	
-	trainList_path = modelDir + ss + "Train.RddList.csv"
+	trainCsvList_path = modelDir + ss + "Train.RddList.csv"
+	trainList_path = modelDir + ss + "Train.RddList.arff"
 		
 	modelObj_path = modelDir + ss + "Predictor.model"
 	trainLog_path = "%s.Step4.Predictor.Training.Log"%outPrefix
@@ -110,10 +111,15 @@ def PredictorTrain_func(argElm):
 	if memLimit[-1] != "G":
 		memLimit += "G"
 		##End if
+        a, b, c, d = memLimit, wekaJar_path, trainCsvList_path, trainList_path
+        
+        convertCmd ='java -Xmx%s -cp %s weka.core.converters.CSVLoader %s -L "16:Positive,Negative" > %s'%(a, b, c, d)
+	commands.getoutput(convertCmd)
 
-	a, b, c, = memLimit, wekaJar_path, trainList_path
+        a, b, c, = memLimit, wekaJar_path, trainList_path
 	d, e = modelObj_path, trainLog_path 
-	trainCmd = "java -Xmx%s -cp %s weka.classifiers.trees.RandomForest -i -k -t %s -d %s > %s"%(a, b, c, d, e)
+	trainCmd = "java -Xmx%s -cp %s weka.classifiers.trees.RandomForest -k -t %s -d %s > %s"%(a, b, c, d, e)
+        ClockAndReport_func(trainCmd)
 	commands.getoutput(trainCmd)
 
 	attrEvalLog_path = "%s.Step4.Attribute.Evaluation.Log"%outPrefix

@@ -33,9 +33,9 @@ def main():
         print 'The Prerequisite_Check.py script has therefore not run'
 
 	#Step_2: Raw_RDD_Identify.py
-	messageStr = "Step_2: Raw_RDD_Identify.py..."
-	ClockAndReport_func(messageStr)
-	step2.main(argElm)
+	#messageStr = "Step_2: Raw_RDD_Identify.py..."
+	#ClockAndReport_func(messageStr)
+	#step2.main(argElm)
 
 	#Step_3: Training_Data_Prepare.py
 	messageStr = "Step_3: Training_Data_Prepare.py..."
